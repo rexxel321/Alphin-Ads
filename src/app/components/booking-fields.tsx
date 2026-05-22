@@ -1,7 +1,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { Button } from "./ui/button";
-import { Calendar as CalendarIcon, Users, Minus, Plus } from "lucide-react";
+import { Calendar as CalendarIcon, Users, Minus, Plus, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "./ui/utils";
 import type { DateRange } from "react-day-picker";
@@ -10,30 +10,47 @@ type FieldShellProps = {
   label: string;
   value: React.ReactNode;
   icon: React.ReactNode;
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "glass" | "mobile-dark";
 };
 
 export function FieldShell({ label, value, icon, variant = "light" }: FieldShellProps) {
+  const isGlass = variant === "glass" || variant === "mobile-dark";
+  
   const base =
-    variant === "dark"
-      ? "border-white/15 bg-white/5 text-white hover:bg-white/10"
-      : "border-border bg-background hover:bg-muted/40";
+    variant === "mobile-dark"
+      ? "border-transparent bg-transparent text-white hover:bg-white/5 rounded-none py-5 px-6"
+      : variant === "glass"
+      ? "border-transparent bg-transparent text-white hover:bg-white/5 rounded-none py-4 px-6"
+      : variant === "dark"
+      ? "border-white/15 bg-white/5 text-white hover:bg-white/10 rounded-full px-4 py-2.5"
+      : "border-border bg-background hover:bg-muted/40 rounded-full px-4 py-2.5";
+      
   return (
     <div
       className={cn(
-        "flex w-full items-center gap-3 rounded-full border px-4 py-2.5 transition-colors",
+        "flex w-full items-center gap-3 transition-colors text-left",
+        !isGlass && "border",
         base,
       )}
     >
-      <div className={cn("opacity-70", variant === "dark" ? "text-white" : "text-foreground")}>
+      <div className={cn("opacity-70 shrink-0", variant === "glass" || variant === "dark" || variant === "mobile-dark" ? "text-white" : "text-foreground")}>
         {icon}
       </div>
-      <div className="flex flex-col items-start text-left leading-tight">
-        <span className={cn("uppercase tracking-widest", variant === "dark" ? "text-white/70" : "text-muted-foreground")} style={{ fontSize: 10 }}>
+      <div className="flex flex-grow flex-col items-start leading-tight min-w-0 pr-2">
+        <span 
+          className={cn(
+            "uppercase tracking-widest block font-medium", 
+            variant === "mobile-dark" ? "text-white/40" : variant === "glass" ? "text-white/50" : variant === "dark" ? "text-white/70" : "text-muted-foreground"
+          )} 
+          style={{ fontSize: 9 }}
+        >
           {label}
         </span>
-        <span className="truncate">{value}</span>
+        <span className="truncate text-sm font-medium w-full">{value}</span>
       </div>
+      {isGlass && (
+        <ChevronDown className="h-4 w-4 text-white/50 shrink-0 ml-auto" />
+      )}
     </div>
   );
 }
@@ -48,13 +65,13 @@ export function DateField({
   label: string;
   date?: Date;
   onChange: (d?: Date) => void;
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "glass" | "mobile-dark";
   fromDate?: Date;
 }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button type="button" className="block w-full">
+        <button type="button" className="block w-full h-full focus:outline-none">
           <FieldShell
             label={label}
             icon={<CalendarIcon className="h-4 w-4" />}
@@ -83,11 +100,11 @@ export function DateRangeField({
 }: {
   dateRange?: DateRange;
   onChange: (range?: DateRange) => void;
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "glass" | "mobile-dark";
 }) {
   const formatRange = () => {
     if (!dateRange?.from) {
-      return <span className="opacity-60">Select dates</span>;
+      return <span className="opacity-60">Select date</span>;
     }
     if (!dateRange.to) {
       return format(dateRange.from, "MMM d");
@@ -98,10 +115,10 @@ export function DateRangeField({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button type="button" className="block w-full">
+        <button type="button" className="block w-full h-full focus:outline-none">
           <FieldShell
-            label="Check-in – Check-out"
-            icon={<CalendarIcon className="h-4 w-4" />}
+            label="Arrival & Departure"
+            icon={<CalendarIcon className="h-4.5 w-4.5" />}
             variant={variant}
             value={formatRange()}
           />
@@ -130,19 +147,19 @@ export function GuestsField({
 }: {
   value: Guests;
   onChange: (g: Guests) => void;
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "glass" | "mobile-dark";
 }) {
   const total = value.adults + value.children;
-  const summary = `${total} ${total === 1 ? "guest" : "guests"}`;
+  const summary = `${total} ${total === 1 ? "Guest" : "Guests"}`;
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button type="button" className="block w-full">
+        <button type="button" className="block w-full h-full focus:outline-none">
           <FieldShell
             label="Guests"
-            icon={<Users className="h-4 w-4" />}
+            icon={<Users className="h-4.5 w-4.5" />}
             variant={variant}
-            value={summary}
+            value={total > 0 ? summary : <span className="opacity-60">Number of guests</span>}
           />
         </button>
       </PopoverTrigger>
