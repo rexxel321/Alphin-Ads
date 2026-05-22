@@ -171,15 +171,15 @@ export function Footer() {
       <div className="border-t border-zinc-800/60 w-full" />
 
       {/* Bottom bar container */}
-      <div className="mx-auto max-w-[1400px] px-6 md:px-12 py-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div className="mx-auto max-w-[1360px] px-6 md:px-0 py-8 md:py-0 md:my-8 md:h-[24px] flex flex-col md:flex-row md:items-center md:justify-between gap-6 w-full">
         {/* Copyright line */}
         <p className="text-zinc-500 text-[13px] font-light">
           © 2026 Hotel Ipsum
         </p>
 
         {/* Design and Code attribution line */}
-        <div className="flex flex-col items-start gap-1.5 font-montserrat">
-          <span className="text-zinc-500 text-[12px] font-light">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-1.5 md:gap-3 font-montserrat">
+          <span className="text-zinc-500 text-[12px] font-light md:translate-y-[1px]">
             Design and Code by
           </span>
           <div className="flex items-center gap-2.5">

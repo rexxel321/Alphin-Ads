@@ -103,7 +103,7 @@ export function Reserve() {
         </h2>
 
         {/* Subtext */}
-        <p className="mb-10 font-sans text-white/75 font-normal text-[16px] leading-[1.5] tracking-normal text-center max-w-[358px] sm:max-w-xl">
+        <p className="mb-10 w-full max-w-[358px] md:max-w-[1360px] md:w-[1360px] md:h-[24px] font-sans text-white/75 font-normal text-[16px] leading-[1.5] tracking-normal text-center opacity-100 rotate-0">
           Fill out the form below, and our team will get back to you within 24
           hours with a non-binding offer tailored to your needs.
         </p>
