@@ -109,8 +109,8 @@ export function Reserve() {
         </p>
 
         {/* White card */}
-        <div className="w-full max-w-[358px] sm:max-w-2xl bg-white shadow-[0_30px_80px_rgba(0,0,0,0.35)] p-5 sm:p-8 rounded-2xl">
-          <form onSubmit={onSubmit} className="space-y-6">
+        <div className="w-full max-w-[358px] md:max-w-[880px] md:w-[880px] md:h-[927px] bg-white shadow-[0_30px_80px_rgba(0,0,0,0.35)] p-[20px] rounded-[8px] opacity-100 rotate-0">
+          <form onSubmit={onSubmit} className="space-y-[32px]">
 
             {/* Your Details */}
             <div>
