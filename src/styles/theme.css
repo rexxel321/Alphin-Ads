@@ -200,3 +200,12 @@ body :not(footer, footer *) {
   font-weight: 400 !important;
   font-style: normal !important;
 }
+
+/* Hide scrollbars globally for utility class scrollbar-none */
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+}
+.scrollbar-none {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
